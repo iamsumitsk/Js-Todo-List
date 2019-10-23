@@ -1,55 +1,57 @@
 const addForm = document.querySelector('.add');
-const search = document.querySelector('.serach input');
+const search = document.querySelector('.search input');
 const list = document.querySelector('.todos');
 
-const generatetemplete = todo => {
-    const html = `
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-            <span>${todo}</span>
-            <i class="far fa-trash-alt delete"></i>
-        </li>
-    `;
-    list.innerHTML += html;
+const generateTemplate = todo => {
+  const html = `
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      <span>${todo}</span>
+      <i class="far fa-trash-alt delete"></i>
+    </li>
+  `;
+  list.innerHTML += html;
 };
 
 const filterTodos = term => {
 
-    //add filtered class
-    Array.from(list.children)
-        .filter(todo => !todo.textContent.toLocaleLowerCase().includes(term))
-        .forEach(todo => todo.classList.add('filtered'));
+  // add filtered class
+  Array.from(list.children)
+    .filter(todo => !todo.textContent.toLowerCase().includes(term))
+    .forEach(todo => todo.classList.add('filtered'));
 
-        //remove filter class
-        Array.from(list.children)
-        .filter(todo => todo.textContent.toLocaleLowerCase().includes(term))
-        .forEach(todo => todo.classList.remove('filtered'));
+  // remove filtered class
+  Array.from(list.children)
+    .filter(todo => todo.textContent.toLowerCase().includes(term))
+    .forEach(todo => todo.classList.remove('filtered'));
+
 };
 
-//add todos event
+// add todos event
 addForm.addEventListener('submit', e => {
-    
-    e.preventDefault();
-    const todo = addForm.add.value.trim();
+  
+  e.preventDefault();
+  const todo = addForm.add.value.trim();
 
-    if(todo.length) {
-        generatetemplete();
-        addForm.reset();
-    }
+  if(todo.length){
+    generateTemplate(todo);
+    addForm.reset();
+  }
+
 });
 
-//delete todos event
+// delete todos event
 list.addEventListener('click', e => {
 
-    if (e.target.classList.contains('delete')) {
-        e.target.parentElement.remove();
-    }
+  if(e.target.classList.contains('delete')){
+    e.target.parentElement.remove();
+  }
+
 });
 
-//filter todos event
+// filter todos event
 search.addEventListener('keyup', () => {
 
-    const term = search.value.trim().toLocaleLowerCase();
-    filterTodos(term);
+  const term = search.value.trim().toLowerCase();
+  filterTodos(term);
+
 });
-    
-    
